@@ -2,17 +2,21 @@ import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
 
 import TopCripto from '../components/TopCripto';
+import CriptoHeader from '../components/CriptoHeader'
 
 const Home = () => {
   const criptos= ["bitcoin", "ethereum", "cardano"]
 
   return (
+    <>
+    <CriptoHeader criptosInfo={criptos}/>     
     <Header>
       <BlockLeft>
         <Title>Analiza los precios de las criptomonedas</Title>
         <TopCripto criptosInfo={criptos} />
       </BlockLeft>
     </Header>
+    </>
   )
 }
 
