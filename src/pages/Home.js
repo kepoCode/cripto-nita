@@ -3,11 +3,15 @@ import styled from "styled-components";
 
 import TopCripto from '../components/TopCripto';
 import AllCripto from './AllCripto';
+import CriptoHeader from '../components/CriptoHeader'
+
 
 const Home = () => {
   const criptos= ["bitcoin", "ethereum", "cardano"]
 
   return (
+    <>
+    <CriptoHeader criptosInfo={criptos}/>     
     <Header>
       <BlockLeft>
         <Title>Analiza los precios de las criptomonedas</Title>
@@ -15,6 +19,7 @@ const Home = () => {
         <AllCripto />
       </BlockLeft>
     </Header>
+    </>
   )
 }
 

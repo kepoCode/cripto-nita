@@ -1,29 +1,48 @@
+<div>
+    <img src="https://user-images.githubusercontent.com/109508492/193857195-776a8553-fd32-4a3e-9fdc-1f5cfa6ce3d0.png?" alt=" "width="50">
+    <h3>Cripto Nita </h3>
+</div>
+<br>
 
-![opengraph da6e44c0](https://user-images.githubusercontent.com/109508492/193857096-d21643fc-cbdf-4165-9341-2db3783d181a.png)
+## Proyect: 
 
+It is a project made with ReactJS to see the statistics of cryptocurrencies and their value at all times.
 
-![cripto-logo](https://user-images.githubusercontent.com/109508492/193857195-776a8553-fd32-4a3e-9fdc-1f5cfa6ce3d0.png) Cripto Nita
+This repo is created for the Hacktoberfest 2022. The project is designed for all types of programmers, no matter what level. You can make changes in the UI-UX/readme or also create graphs or play with the cryptocurrency api.
 
+## How to take part
 
-## Projecto
-
-Es un proyecto hecho con ReactJS para ver las estadisticas de las criptomonedas y su valor en cada momento.
-
-Este repo es creado para la Hacktoberfest 2022. El proyecto esta pensado para todo tipo de programadores, no importa en nivel. Podéis hacer
-cambios en el UI-UX/readme o también crear gráficas o jugar con la api de criptomonedas.
-
-## Como participar
-
-1. Tenéis que hacer un fork de este proyecto
-2. Y crear una pull request con los cambios que querais realizar.
+You may feel like what is there for you. So I thought this Hacktoberfest would be Perfect time in which you can contribute to this Repo and I'll Merge your PR's. But I need Genuine Ideas and Innovative way we can make this Happen. I Feel we have the Power to pull this off
 
 
-## Para ver la app
+Open an Issue
+Fork this Repo
+Code
+Create a Pull Request
 
-Clona el repo
+<h2>Technologies Used</h2>
+- React
+- Coingecko API
 
-### `npm install`
+## Setup: 
 
-### `npm start`
+Fork this Repo
+```console
+cripto@nita:~$ npm install
+cripto@nita:~$ npm start
+```
 
-Se abrirá en [http://localhost:3000](http://localhost:3000)
+
+Open in [http://localhost:3000](http://localhost:3000)
+
+#### Tips for Contributors:
+
+- PRs beyond our open issues are welcome but make sure your contributions are meaningful and beneficial to other users otherwise your PR may be closed and marked as ‘invalid’.
+- Issues before PRs. If you plan to make a contribution, please make sure there is an issue for it. You can either find an existing issue or open a new issue if none exists.
+- You are welcome to make your first contribution to this repo. 
+
+---	
+	
+<h1>Happy Hacking</h1>
+	
+<a allign="right" href="https://media.giphy.com/media/KmHueA88mFABT9GkkR/giphy.gif"><img src="https://media.giphy.com/media/KmHueA88mFABT9GkkR/giphy.gif?" alt=" " width="400"></a>	
