@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from "styled-components";
 
 import TopCripto from '../components/TopCripto';
+import AllCripto from './AllCripto';
 
 const Home = () => {
   const criptos= ["bitcoin", "ethereum", "cardano"]
@@ -11,6 +12,7 @@ const Home = () => {
       <BlockLeft>
         <Title>Analiza los precios de las criptomonedas</Title>
         <TopCripto criptosInfo={criptos} />
+        <AllCripto />
       </BlockLeft>
     </Header>
   )
