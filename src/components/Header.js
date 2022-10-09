@@ -3,80 +3,98 @@ import styled from "styled-components";
 import LogoImg from '../images/cripto-logo.png';
 
 import { FaHome, FaWallet, FaBars} from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
     const [showMenu, setShowMenu] = useState(false);
-    
+
   return (
-    <>
-        <Nav>
-            <BlockLogo>
-                <ImageNav src={LogoImg} alt="CriptoNita" />
-                <Title>CriptoNita</Title>
-            </BlockLogo>
-            <Bars onClick={()=> setShowMenu(!showMenu)}/> 
-            <Block id={ showMenu ? "menuBar" : "menuNav"}>
-                <LinkNav href="/" activeStyle>
-                    <FaHome style={{ 'color': "black" }}/>
-                    <Text>Inicio</Text>
-                </LinkNav>
-                <LinkNav href="/info" activeStyle>
-                    <FaWallet style={{ 'color': "black" }}/>
-                    <Text>Ver Criptomonedas</Text>
-                </LinkNav>
-            </Block>
-        </Nav>
-    </>
+    <Nav>
+        <NavContainer>
+            <Logo to="/">
+                <LogoIcon src={LogoImg} alt="CriptoNita" />
+                <span>CriptoNita</span>
+            </Logo>
+            <Bars onClick={()=> setShowMenu(!showMenu)}/>
+            <Menu id={ showMenu ? "menuBar" : "menuNav"}>
+                <MenuLink to="/">
+                    <FaHome />
+                    <span>Inicio</span>
+                </MenuLink>
+                <MenuLink to="/info">
+                    <FaWallet />
+                    <span>Ver Criptomonedas</span>
+                </MenuLink>
+            </Menu>
+        </NavContainer>
+    </Nav>
   )
 }
 
 const Nav = styled.nav`
-    display: flex;
-    height: 60px;
-    justify-content: space-between;
-    background: #fff;
-    z-index: 10;
+    background: #0d0712;
+    padding: 0.5rem;
 `;
 
-const LinkNav = styled.a`
+const NavContainer = styled.div`
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    color: #0d0c22;
-    text-decoration: none;
-    padding: 0 1rem;
-    height: 100%;
-    cursor: pointer;
-    &.active {
-        color: 15cdfc;
+    max-width: 80rem;
+    margin: 0 auto;
+`;
+
+const Logo = styled(Link)`
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    span {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: #fff;
     }
 `;
-const BlockLogo = styled.div`
-    display: inline-block;
-    margin-left: 40px;
-    width: 200px;
+
+const LogoIcon = styled.img`
+    height: 42px;
+    width: 42px;
 `;
 
-const Text = styled.span`
-    text-transform: uppercase;
-    color: #111111;
-    font-size: 15px;
-    margin-left: 15px;
-`;
 
-const Title = styled.h3`
-    position: relative;
+const Menu = styled.div`
     display: flex;
-    float: left;
+    justify-content: space-between;
     align-items: center;
-    font-size: 20px;
-    height: 100%;
-    color: #0d0c22;
-    margin-left: 18px;
+    gap: 1rem;
+`
+
+const MenuLink = styled(Link)`
+    display: inline-flex;
+    align-items: center;
+    border-radius: 4px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+    gap: 0.5rem;
+    transition: background 0.2s ease-in-out;
+
+    &:hover {
+        background: #263044;
+        color: #fff;
+    }
+
+    svg {
+        fill: currentColor;
+        font-size: 1rem;
+    }
 `;
 
  const Bars = styled(FaBars) `
     display: none;
-    color: #0d0c22;
+    color: #fff;
 
     @media screen and (max-width: 768px) {
         display: block;
@@ -87,21 +105,6 @@ const Title = styled.h3`
         font-size: 1.8rem;
         cursor: pointer;
     }
- `
-
-const ImageNav = styled.img`
-    display: flex;
-    align-items: center;
-    margin-top: 5px;
-    height: 50px;
-    float: left;
-    width: 50px;
-    z-index: auto;
-
-`;
-
-const Block = styled.div`
-
-`;
+ `;
 
 export default Header

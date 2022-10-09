@@ -1,131 +1,107 @@
-import React, { useState, useEffect } from 'react'
-import styled from "styled-components";
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 
-import BASEURL from "../api/criptosStats";
+import BASEURL from '../api/criptosStats';
 
 const TopCripto = (criptosInfo) => {
-    const [topCripto, setTopCripto] = useState();
-    const crypto = criptosInfo.criptosInfo
+  const [topCripto, setTopCripto] = useState([]);
+  const crypto = criptosInfo.criptosInfo;
 
-    useEffect(() => {
-      const criptoInfo = async () => {
-        const info = await BASEURL.get("/coins/markets", {
-          params: {
-            vs_currency: "eur",
-            ids: crypto.join(),
-            price_change_percentage: "1h,24h,7d"
-          }
-        })
-        setTopCripto(info.data);
-      }
-      criptoInfo()
-    });
+  useEffect(() => {
+    const criptoInfo = async () => {
+      const info = await BASEURL.get('/coins/markets', {
+        params: {
+          vs_currency: 'eur',
+          ids: crypto.join(),
+          price_change_percentage: '1h,24h,7d',
+        },
+      });
+      setTopCripto(info.data);
+    };
+    criptoInfo();
+  }, [crypto]);
 
-    function percentageFormat(percentage) {
-      return parseFloat(percentage).toFixed(3)
-    }
+  function percentageFormat(percentage) {
+    return parseFloat(percentage).toFixed(3);
+  }
 
-    function currencyFormat(current_price) {
-      return  parseFloat(current_price).toFixed(2).replace(/(?=(\d{3})+(?!\d))/g, '.' ) + ' €'
-    }
+  function currencyFormat(current_price) {
+    return (
+      parseFloat(current_price)
+        .toFixed(2)
+        .replace(/(?=(\d{3})+(?!\d))/g, '.') + ' €'
+    );
+  }
 
   return (
-    <BlockCripto>
-      {topCripto ? 
-        topCripto.map((cripto) =>
-          <Cripto key={cripto.id}>
-            {//console.log('cripto', cripto)
-            }
-            <BlockImage>       
-              <Block>
-                <Image src={cripto.image} alt="CriptoNita" />
-                <Percentage>{percentageFormat(cripto.price_change_percentage_24h)}%</Percentage>
-                <CriptoName>{cripto.name}</CriptoName>
-              </Block>
-            </BlockImage>
-            <Block>{currencyFormat(cripto.current_price)}</Block>
-          </Cripto>
-        )
-      : null}
-    </BlockCripto>
-  )
-}
+    <Container>
+      {topCripto.length > 0 &&
+        topCripto.map((cripto) => (
+          <Block key={cripto.id}>
+            <Icon src={cripto.image} alt="CriptoNita" />
+            <Percentage>
+              {percentageFormat(cripto.price_change_percentage_24h)}%
+            </Percentage>
+            <Name>{cripto.name}</Name>
+            <Price>{currencyFormat(cripto.current_price)}</Price>
+          </Block>
+        ))}
+    </Container>
+  );
+};
 
-const BlockCripto = styled.div`
-  position: relative;
-  display: inline-block;
-`;
+const Container = styled.div`
+  max-width: 80rem;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
 
-const CriptoName = styled.p`
-  margin: 5px 30px;
-  text-align: center;
-  font-size: 25px;
-  font-weight: bold;
-  color: #111111;
-  float: right;
-
-  @media screen and (max-width: 414px) {
-    font-size: 15px;
-    margin: 0px 27px;
-  }
-`;
-
-const BlockImage = styled.div`
-  display: block;
-  position: relative;
-  float: left;
-  width: 100%;
-`;
-const Percentage = styled.p`
-  position: absolute;
-  right: 0;
-  top: 0;
-
-  @media screen and (max-width: 869px) {
-    font-size: 15px;
-  }
-  @media screen and (max-width: 414px) {
-    display: none;
-  }
-`;
-
-const Image = styled.img`
-  width: 40px;
-
-  @media screen and (max-width: 869px) {
-    width: 18px;
-  }
-`;
-
-const Cripto = styled.div`
-  display: inline-block;
-  width: 250px;
-  margin: 20px;
-  padding: 20px;
-  border-radius: 10px;
-  background-color: #ffffff;
-  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -1px rgba(0,0,0,0.06);
-
-  @media screen and (max-width: 869px) {
-    width: 180px;
-    margin: 15px;
-    padding: 15px;
-  }
-
-  @media screen and (max-width: 414px) {
-    margin: 6px;
-    padding: 5px;
+  @media (max-width: 40rem) {
+    flex-direction: column;
+    padding: 1rem;
   }
 `;
 
 const Block = styled.div`
-  display: block;
-  width: 100%;
-  margin-top: 20px;
-  font-size: 23px;
-  @media screen and (max-width: 869px) {
-    font-size: 15px;
-  }
+  padding: 1rem;
+  border-radius: 12px;
+  background-color: #314158;
+  box-shadow: 0 0 0 1px #466280, 0 5px 12px -4px #263044;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 280px;
+  position: relative;
+  color: #fff;
+  overflow: hidden;
+  cursor: default;
 `;
 
-export default TopCripto
+const Icon = styled.img`
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  left: 0;
+  top: 0;
+  transform: translate(-20%, -20%);
+  opacity: 0.3;
+`;
+
+const Percentage = styled.span`
+  font-size: 0.875rem;
+  align-self: flex-end;
+`;
+
+const Name = styled.h3`
+  font-size: 2rem;
+  margin: 0.25rem;
+  font-weight: bold;
+  position: relative;
+`;
+
+const Price = styled.span`
+  font-size: 1.25rem;
+`;
+
+export default TopCripto;
