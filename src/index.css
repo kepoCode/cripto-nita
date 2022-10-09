@@ -12,7 +12,7 @@
 
 html {
   scroll-behavior:  smooth;
-  font-family: 'Avenir-Roman',sans-serif;
+  font-family: 'Avenir-Roman', sans-serif;
 }
 
 * {
@@ -21,8 +21,8 @@ html {
     padding: 0;
 }
 body {
-    background-color: #ffffff;
-    color: #111111;
+    background-color: #0D0712;
+    color: #fff;
     font-family: 'Avenir-Roman',sans-serif;
     margin: 0;
     padding: 0;
@@ -45,12 +45,12 @@ h3 {
 
 p {
     line-height: 1.5;
-    color: hsla(0,0%,75.3%,.8);
+    color: #466280;
     font-size: 16px;
 }
 
 a {
-    color: white;
+    color: #fff;
     text-decoration: none;
 }
 #menuNav {
@@ -88,7 +88,7 @@ a {
         max-height: 230px;
         width: 100%;
         display: flex;
-        background-color: #ffffff;
+        background-color: #0D0712;
         flex-direction: column;
         font-size:  14px;
     }
@@ -96,7 +96,7 @@ a {
     #menuBar a{
        margin: 10px;
        font-size: 25px;
-       border-bottom: 1px solid #f3f3f3;
+       border-bottom: 1px solid #263044;
     }
 
     #menuNav {
