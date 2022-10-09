@@ -47,7 +47,7 @@ const AllCripto = () => {
                 <img width="20px" src={cripto.image} alt="CriptoNita" />
                 {cripto.name}
               </Column>
-              <Column>{cripto.symbol}</Column>
+              <Column>{cripto.symbol.toUpperCase()}</Column>
               <Column>{currencyFormat(cripto.current_price)}%</Column>
               <Column>
                 {percentageFormat(cripto.price_change_percentage_24h)}
