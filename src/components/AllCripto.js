@@ -31,14 +31,14 @@ const AllCripto = () => {
     }
   }
 
-  const handleOnclick = () => {
-    if(inputSearch.current.value !== "") {
+  const handleSearchOnclick = () => {
       applyFilter();
-    } else {
-      setParams(INITIALPARAMS)
-      setHide(false);
-    }
   };
+
+  const handleCleanOnclick = () => {
+    setParams(INITIALPARAMS)
+    setHide(false);
+  }
 
   useEffect(() => {
     const criptoInfo = async () => {
@@ -52,9 +52,9 @@ const AllCripto = () => {
     <Container>
       <Filter>
         <label hidden={hide}>Filtro de búsqueda: </label>
-        <input type='text' placeholder='Ej ethereum' ref={inputSearch} onChange={(e) => handleOnChange(e)} onKeyDown={handleOnKeyDown} hidden={hide}></input>
-        <button type='button' onClick={handleOnclick} hidden={hide}>Buscar</button>
-        <button type='button' onClick={handleOnclick} hidden={!hide}>Limpiar búsqueda</button>
+        <input type='text' placeholder='Ej ethereum' ref={inputSearch} onChange={handleOnChange} onKeyDown={handleOnKeyDown} hidden={hide}></input>
+        <button type='button' onClick={handleSearchOnclick} hidden={hide}>Buscar</button>
+        <button type='button' onClick={handleCleanOnclick} hidden={!hide}>Limpiar búsqueda</button>
       </Filter>
       <Table>
         <Head>
@@ -95,7 +95,20 @@ const Filter = styled.div`
   margin-top: 30px;
   justify-content: center;
   align-items: center
+
+  input['text']::placeholder{
+    padding-left: 15px;
+  }
+
+  button{
+    padding: 0 5px;
+  }
+
+  @media screen and (max-width: 768px) {
+    display: grid
+  }
 `;
+
 
 const Table = styled.div`
   max-width: 80rem;
