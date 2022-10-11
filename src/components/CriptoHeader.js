@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import BASEURL from '../api/criptosStats';
+import { currencyFormat } from '../util/utilFunctions';
 
 const CriptoHeader = (criptosInfo) => {
   const [topCripto, setTopCripto] = useState([]);
@@ -19,13 +20,6 @@ const CriptoHeader = (criptosInfo) => {
     criptoInfo();
   }, [crypto]);
 
-  function currencyFormat(current_price) {
-    return (
-      parseFloat(current_price)
-        .toFixed(2)
-        .replace(/(?=(\d{3})+(?!\d))/g, '.') + ' €'
-    );
-  }
 
   return (
     <TopBar>

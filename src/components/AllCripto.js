@@ -1,46 +1,70 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import BASEURL from '../api/criptosStats';
+import { currencyFormat, percentageFormat } from '../util/utilFunctions';
+
+const INITIALPARAMS = {
+  vs_currency: 'eur',
+  price_change_percentage: '1h,24h,7d'
+}
 
 const AllCripto = () => {
   const [topCripto, setTopCripto] = useState([]);
+  const [hide, setHide] = useState(false);
+  const [params, setParams] = useState(INITIALPARAMS);
+  const inputSearch = useRef(null);
+
+  const handleOnChange = (e) => {
+    inputSearch.current.value = e.target.value;
+  }
+
+  const applyFilter = () => {
+    setParams({...params, ids: inputSearch.current.value })
+    inputSearch.current.value = null;
+    setHide(true)
+  }
+
+  const handleOnKeyDown = (e) => {
+    if(e.key === 'Enter') {
+      applyFilter();
+    }
+  }
+
+  const handleOnclick = () => {
+    if(inputSearch.current.value !== "") {
+      applyFilter();
+    } else {
+      setParams(INITIALPARAMS)
+      setHide(false);
+    }
+  };
 
   useEffect(() => {
     const criptoInfo = async () => {
-      const info = await BASEURL.get('/coins/markets', {
-        params: {
-          vs_currency: 'eur',
-          price_change_percentage: '1h,24h,7d',
-        },
-      });
+      const info = await BASEURL.get('/coins/markets', {params});
       setTopCripto(info.data);
     };
     criptoInfo();
-  });
-
-  function percentageFormat(percentage) {
-    return parseFloat(percentage).toFixed(3);
-  }
-  function currencyFormat(current_price) {
-    return (
-      parseFloat(current_price)
-        .toFixed(2)
-        .replace(/(?=(\d{3})+(?!\d))/g, '.') + ' €'
-    );
-  }
+  }, [params]);
 
   return (
     <Container>
+      <Filter>
+        <label hidden={hide}>Filtro de búsqueda: </label>
+        <input type='text' placeholder='Ej ethereum' ref={inputSearch} onChange={(e) => handleOnChange(e)} onKeyDown={handleOnKeyDown} hidden={hide}></input>
+        <button type='button' onClick={handleOnclick} hidden={hide}>Buscar</button>
+        <button type='button' onClick={handleOnclick} hidden={!hide}>Limpiar búsqueda</button>
+      </Filter>
       <Table>
         <Head>
           <Title>Nombre</Title>
           <Title>Simbolo</Title>
           <Title>Precio</Title>
-          <Title>Porcentage 24h</Title>
+          <Title>Porcentaje 24h</Title>
           <Title>Volumen Total</Title>
         </Head>
-        {topCripto.length > 0 &&
+        {topCripto.length > 0 ?
           topCripto.map((cripto) => (
             <Row key={cripto.id}>
               <Column>
@@ -54,7 +78,7 @@ const AllCripto = () => {
               </Column>
               <Column>{currencyFormat(cripto.total_volume)}</Column>
             </Row>
-          ))}
+          )) : <span>No se ha encontrado información</span>}
       </Table>
     </Container>
   );
@@ -62,7 +86,16 @@ const AllCripto = () => {
 
 const Container = styled.div`
   overflow: auto;
-`
+`;
+
+const Filter = styled.div`
+  display: inline-flex;
+  flex-direction: row;
+  gap: .5rem;
+  margin-top: 30px;
+  justify-content: center;
+  align-items: center
+`;
 
 const Table = styled.div`
   max-width: 80rem;
