@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import BASEURL from '../api/criptosStats';
+import { currencyFormat, percentageFormat } from '../util/utilFunctions';
 
 const TopCripto = (criptosInfo) => {
   const [topCripto, setTopCripto] = useState([]);
@@ -20,18 +21,6 @@ const TopCripto = (criptosInfo) => {
     };
     criptoInfo();
   }, [crypto]);
-
-  function percentageFormat(percentage) {
-    return parseFloat(percentage).toFixed(3);
-  }
-
-  function currencyFormat(current_price) {
-    return (
-      parseFloat(current_price)
-        .toFixed(2)
-        .replace(/(?=(\d{3})+(?!\d))/g, '.') + ' €'
-    );
-  }
 
   return (
     <Container>
