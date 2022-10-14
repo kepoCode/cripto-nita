@@ -1,26 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from 'react'
+import styled from 'styled-components'
 
-import BASEURL from '../api/criptosStats';
-import { currencyFormat, percentageFormat } from '../util/utilFunctions';
+import coingecko from '../api/coingecko'
+import { currencyFormat, percentageFormat } from '../util/utilFunctions'
 
 const TopCripto = (criptosInfo) => {
-  const [topCripto, setTopCripto] = useState([]);
-  const crypto = criptosInfo.criptosInfo;
+  const [topCripto, setTopCripto] = useState([])
+  const crypto = criptosInfo.criptosInfo
 
   useEffect(() => {
     const criptoInfo = async () => {
-      const info = await BASEURL.get('/coins/markets', {
+      const info = await coingecko.getCoinsMarkets({
         params: {
           vs_currency: 'eur',
           ids: crypto.join(),
           price_change_percentage: '1h,24h,7d',
         },
-      });
-      setTopCripto(info.data);
-    };
-    criptoInfo();
-  }, [crypto]);
+      })
+
+      setTopCripto(info)
+    }
+    criptoInfo()
+  }, [crypto])
 
   return (
     <Container>
@@ -36,8 +37,8 @@ const TopCripto = (criptosInfo) => {
           </Block>
         ))}
     </Container>
-  );
-};
+  )
+}
 
 const Container = styled.div`
   max-width: 80rem;
@@ -50,7 +51,7 @@ const Container = styled.div`
     flex-direction: column;
     padding: 1rem;
   }
-`;
+`
 
 const Block = styled.div`
   padding: 1rem;
@@ -65,7 +66,7 @@ const Block = styled.div`
   color: #fff;
   overflow: hidden;
   cursor: default;
-`;
+`
 
 const Icon = styled.img`
   position: absolute;
@@ -75,22 +76,22 @@ const Icon = styled.img`
   top: 0;
   transform: translate(-20%, -20%);
   opacity: 0.3;
-`;
+`
 
 const Percentage = styled.span`
   font-size: 0.875rem;
   align-self: flex-end;
-`;
+`
 
 const Name = styled.h3`
   font-size: 2rem;
   margin: 0.25rem;
   font-weight: bold;
   position: relative;
-`;
+`
 
 const Price = styled.span`
   font-size: 1.25rem;
-`;
+`
 
-export default TopCripto;
+export default TopCripto
