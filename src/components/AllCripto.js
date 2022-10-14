@@ -105,21 +105,30 @@ const Container = styled.div`
 const Filter = styled.div`
   display: inline-flex;
   flex-direction: row;
-  gap: .5rem;
+  gap: 0.5rem;
   margin-top: 30px;
   justify-content: center;
-  align-items: center
+  align-items: center;
 
-  input['text']::placeholder{
-    padding-left: 15px;
+  input {
+    border-radius: 0.75rem;
+    ::placeholder {
+      padding-left: 15px;
+    }
   }
 
-  button{
+  button {
     padding: 0 5px;
+    border-radius: 0.75rem;
+    background: #466280;
+    color: #ffffff;
+    :hover {
+      background: #263044;
+    }
   }
 
   @media screen and (max-width: 768px) {
-    display: grid
+    display: grid;
   }
 `
 
