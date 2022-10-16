@@ -1,60 +1,71 @@
-import React, { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useRef, useState } from 'react'
+import styled from 'styled-components'
 
-import BASEURL from '../api/criptosStats';
-import { currencyFormat, percentageFormat } from '../util/utilFunctions';
+import coingecko from '../api/coingecko'
+import { currencyFormat, percentageFormat } from '../util/utilFunctions'
 
 const INITIALPARAMS = {
   vs_currency: 'eur',
-  price_change_percentage: '1h,24h,7d'
+  price_change_percentage: '1h,24h,7d',
 }
 
 const AllCripto = () => {
-  const [topCripto, setTopCripto] = useState([]);
-  const [hide, setHide] = useState(false);
-  const [params, setParams] = useState(INITIALPARAMS);
-  const inputSearch = useRef(null);
+  const [topCripto, setTopCripto] = useState([])
+  const [hide, setHide] = useState(false)
+  const [params, setParams] = useState(INITIALPARAMS)
+  const inputSearch = useRef(null)
 
   const handleOnChange = (e) => {
-    inputSearch.current.value = e.target.value;
+    inputSearch.current.value = e.target.value
   }
 
   const applyFilter = () => {
-    setParams({...params, ids: inputSearch.current.value })
-    inputSearch.current.value = null;
+    setParams({ ...params, ids: inputSearch.current.value })
+    inputSearch.current.value = null
     setHide(true)
   }
 
   const handleOnKeyDown = (e) => {
-    if(e.key === 'Enter') {
-      applyFilter();
+    if (e.key === 'Enter') {
+      applyFilter()
     }
   }
 
   const handleSearchOnclick = () => {
-      applyFilter();
-  };
+    applyFilter()
+  }
 
   const handleCleanOnclick = () => {
     setParams(INITIALPARAMS)
-    setHide(false);
+    setHide(false)
   }
 
   useEffect(() => {
     const criptoInfo = async () => {
-      const info = await BASEURL.get('/coins/markets', {params});
-      setTopCripto(info.data);
-    };
-    criptoInfo();
-  }, [params]);
+      const info = await coingecko.getCoinsMarkets({ params })
+      setTopCripto(info)
+    }
+    criptoInfo()
+  }, [params])
 
   return (
     <Container>
       <Filter>
         <label hidden={hide}>Filtro de búsqueda: </label>
-        <input type='text' placeholder='Ej ethereum' ref={inputSearch} onChange={handleOnChange} onKeyDown={handleOnKeyDown} hidden={hide}></input>
-        <button type='button' onClick={handleSearchOnclick} hidden={hide}>Buscar</button>
-        <button type='button' onClick={handleCleanOnclick} hidden={!hide}>Limpiar búsqueda</button>
+        <input
+          type="text"
+          placeholder="Ej ethereum"
+          ref={inputSearch}
+          onChange={handleOnChange}
+          onKeyDown={handleOnKeyDown}
+          hidden={hide}
+        ></input>
+        <button type="button" onClick={handleSearchOnclick} hidden={hide}>
+          Buscar
+        </button>
+        <button type="button" onClick={handleCleanOnclick} hidden={!hide}>
+          Limpiar búsqueda
+        </button>
       </Filter>
       <Table>
         <Head>
@@ -64,7 +75,7 @@ const AllCripto = () => {
           <Title>Porcentaje 24h</Title>
           <Title>Volumen Total</Title>
         </Head>
-        {topCripto.length > 0 ?
+        {topCripto.length > 0 ? (
           topCripto.map((cripto) => (
             <Row key={cripto.id}>
               <Column>
@@ -78,37 +89,48 @@ const AllCripto = () => {
               </Column>
               <Column>{currencyFormat(cripto.total_volume)}</Column>
             </Row>
-          )) : <span>No se ha encontrado información</span>}
+          ))
+        ) : (
+          <span>No se ha encontrado información</span>
+        )}
       </Table>
     </Container>
-  );
-};
+  )
+}
 
 const Container = styled.div`
   overflow: auto;
-`;
+`
 
 const Filter = styled.div`
   display: inline-flex;
   flex-direction: row;
-  gap: .5rem;
+  gap: 0.5rem;
   margin-top: 30px;
   justify-content: center;
-  align-items: center
+  align-items: center;
 
-  input['text']::placeholder{
-    padding-left: 15px;
+  input {
+    border-radius: 0.75rem;
+    ::placeholder {
+      padding-left: 15px;
+    }
   }
 
-  button{
+  button {
     padding: 0 5px;
+    border-radius: 0.75rem;
+    background: #466280;
+    color: #ffffff;
+    :hover {
+      background: #263044;
+    }
   }
 
   @media screen and (max-width: 768px) {
-    display: grid
+    display: grid;
   }
-`;
-
+`
 
 const Table = styled.div`
   max-width: 80rem;
@@ -122,12 +144,12 @@ const Table = styled.div`
   text-align: left;
   font-size: 1rem;
   box-shadow: 0 12px 20px -6px #46628056;
-`;
+`
 
 const Head = styled.div`
   background: #466280;
   display: table-row;
-`;
+`
 
 const Title = styled.h4`
   padding: 1rem;
@@ -135,7 +157,7 @@ const Title = styled.h4`
   font-weight: bold;
   margin: 0;
   display: table-cell;
-`;
+`
 
 const Row = styled.div`
   display: table-row;
@@ -143,7 +165,7 @@ const Row = styled.div`
   &:nth-child(2n) {
     background: #263044;
   }
-`;
+`
 
 const Column = styled.div`
   padding: 0.5rem 1rem;
@@ -152,6 +174,6 @@ const Column = styled.div`
   img {
     margin-right: 1rem;
   }
-`;
+`
 
-export default AllCripto;
+export default AllCripto
