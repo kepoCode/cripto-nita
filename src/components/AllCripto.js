@@ -11,6 +11,7 @@ const INITIALPARAMS = {
 
 const AllCripto = () => {
   const [topCripto, setTopCripto] = useState([])
+  const [displayCriptos, setDisplayCriptos] = useState([]);
   const [hide, setHide] = useState(false)
   const [params, setParams] = useState(INITIALPARAMS)
   const inputSearch = useRef(null)
@@ -20,7 +21,16 @@ const AllCripto = () => {
   }
 
   const applyFilter = () => {
-    setParams({ ...params, ids: inputSearch.current.value })
+    if (!inputSearch.current.value) {
+      return;
+    }
+
+    let target = inputSearch.current.value,
+        criptos = [...topCripto].filter(cr => {
+          let lower = cr.id && cr.id.toLowerCase();
+          return cr.id.indexOf(target.toLowerCase()) !== -1;
+        });
+    setDisplayCriptos(criptos);
     inputSearch.current.value = null
     setHide(true)
   }
@@ -36,14 +46,15 @@ const AllCripto = () => {
   }
 
   const handleCleanOnclick = () => {
-    setParams(INITIALPARAMS)
-    setHide(false)
+    setDisplayCriptos([...topCripto]);
+    setHide(false);
   }
 
   useEffect(() => {
     const criptoInfo = async () => {
       const info = await coingecko.getCoinsMarkets({ params })
-      setTopCripto(info)
+      setTopCripto(info);
+      setDisplayCriptos(info);
     }
     criptoInfo()
   }, [params])
@@ -75,8 +86,8 @@ const AllCripto = () => {
           <Title>Porcentaje 24h</Title>
           <Title>Volumen Total</Title>
         </Head>
-        {topCripto.length > 0 ? (
-          topCripto.map((cripto) => (
+        {displayCriptos.length > 0 ? (
+          displayCriptos.map((cripto) => (
             <Row key={cripto.id}>
               <Column>
                 <img width="20px" src={cripto.image} alt="CriptoNita" />
